@@ -1,0 +1,104 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Modal</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+	<style type="text/css">
+		table td,table th{
+			border:1px solid grey;
+			width: 100px
+		}
+		table{margin-left:30px;margin-top:40px;}
+	</style>
+<table>
+	<tr><td>xxx</td><td>[X]</td></tr>
+	<tr><td>aaaa</td><td><span modal-confirm data-target="#myModal" data-toggle="modal" style="cursor:pointer" onclick="DoAction('DEL',1)">[X]</span></td></tr>
+	<tr><td>qqqq</td><td>[X]</td></tr>
+	<tr><td>wwww</td><td>[X]</td></tr>
+</table>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p id="ModalText">Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+      	<button id="okbutton" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+        <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("[modal-confirm]").click(function(){
+			var DoAction=$(this).attr("onclick");
+			$("#okbutton").attr("onclick",DoAction);
+
+			checkconfirm=true;
+		});
+
+		$("#myModal,#cancel,#close").click(function(){
+			checkconfirm=false;
+		});
+
+
+	});
+</script>
+
+</body>
+<script type="text/javascript">
+var checkconfirm=false;
+
+ function DoAction(ServerAction,val) {
+            var confirmed, isSubmitted, url, err;
+
+            confirmed = true; isSubmitted = true; url = ""; err = "";
+
+            switch (ServerAction) {
+                case "DEL": 
+
+                		 confirmed=ConfirmModal("โปรดระวัง 5555");
+
+					break;
+                
+            }
+
+            if (err != "") {
+                alert(err);
+            } else if (url != "") {
+                window.location.href = url;
+            } else if (isSubmitted && confirmed) {
+
+                document.write("Submit");
+            }
+        }
+
+   function ConfirmModal(a){
+   		if(checkconfirm){
+			return true;
+		}else{
+			$("#ModalText").html(a);
+			return false;
+		}
+   }
+</script>
+
+
+
+
+</html>
